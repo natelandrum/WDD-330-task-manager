@@ -1,0 +1,25 @@
+POST http://localhost:8080/task/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "title":"This Project",
+  "desctiption":"Work out all the bugs in this project.",
+  "due":"2024-05-31",
+  "priority":"high"
+}
+###
+
+GET http://localhost:8080/task/ HTTP/1.1
+
+###
+
+PUT http://localhost:8080/task/664c0264daeeeb95652d69a0/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "title":"Test",
+  "description":"Test",
+  "due":"2024-05-24",
+  "priority":"low",
+  "completed":true
+}

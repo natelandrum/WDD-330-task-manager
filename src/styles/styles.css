@@ -1,0 +1,187 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #137fea;
+
+}
+
+#app {
+    background: white;
+    border-radius: 10px;
+    width: 80vw;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.form-group {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+#task-form-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+input,
+select {
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 5px;
+    height: fit-content;
+}
+
+#task-form-container input,
+#task-form-container select {
+    display: block;
+    margin: 5px 0 20px;
+}
+
+
+
+
+button {
+    background: #045ab0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #137fea;
+}
+
+#task-form-container input:valid,
+#task-form-container select:valid {
+    border: 2px solid green;
+}
+
+input:invalid,
+select:invalid {
+    border: 2px solid red;
+}
+
+.list-item {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: .5fr 3fr .5fr .5fr;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding-right: 20px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0); 
+}
+
+.list-item__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.list-item input[type="checkbox"] {
+    margin-left: 1rem;
+    margin-bottom: 10px;
+}
+
+.list-item span {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding-bottom: 5px;
+}
+
+.list-item p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.list-item .remove {
+    background: #b41616;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.list-item .remove:hover {
+    background: #e33b3b;
+}
+
+
+.tasks {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tasks button{
+    height: fit-content;
+    max-height: 50px;
+    max-width: 100px;
+    width: 100%;
+}
+
+.tasks select {
+    width: 100%;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.tasks input {
+    width: 100%;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+
+
+#task-form-container,
+#task-list-container {
+    transform: translate(100%);
+}
+
+#task-form-container.animate-in,
+#task-list-container.animate-in {
+    transition: transform 1s ease-out;
+    transform: translateX(0);
+}
+
+.list-item .High {
+    color: #B30000;
+}
+.list-item .Medium {
+    color: #994C00;
+}
+.list-item .Low {
+    color: #008000;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

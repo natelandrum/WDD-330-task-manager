@@ -4,21 +4,27 @@ export async function filterTasks() {
         const filter = e.target.value;
         const tasks = document.querySelectorAll(".list-item");
         tasks.forEach(task => {
-            task.style.display = "grid";
-            if (filter === "completed" && !task.querySelector("input").checked) {
-                task.style.display = "none";
-            }
-            if (filter === "not-completed" && task.querySelector("input").checked) {
-                task.style.display = "none";
-            }
-            if (filter === "high" && task.querySelector(".list-item__priority p").textContent !== "High") {
-                task.style.display = "none";
-            }
-            if (filter === "medium" && task.querySelector(".list-item__priority p").textContent !== "Medium") {
-                task.style.display = "none";
-            }
-            if (filter === "low" && task.querySelector(".list-item__priority p").textContent !== "Low") {
-                task.style.display = "none";
+            task.style.display = "grid"; // Reset display to grid before applying filter
+            switch(filter) {
+                case "completed":
+                    if (!task.querySelector("input").checked) {
+                        task.style.display = "none";
+                    }
+                    break;
+                case "not-completed":
+                    if (task.querySelector("input").checked) {
+                        task.style.display = "none";
+                    }
+                    break;
+                case "high":
+                case "medium":
+                case "low":
+                    if (task.querySelector(".list-item__priority p").textContent !== filter.charAt(0).toUpperCase() + filter.slice(1)) {
+                        task.style.display = "none";
+                    }
+                    break;
+                default:
+                    break;
             }
         });
     });

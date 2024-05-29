@@ -17,6 +17,7 @@ const TaskForm = ({ onSubmit }) => {
                 </label>
             </div>
             <button class="add-task" method="post" action="/" type="submit">Add Task</button>
+            <button id="cancel-task" type="button">Cancel</button>
         </form>
     `;
 

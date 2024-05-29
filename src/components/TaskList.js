@@ -1,3 +1,5 @@
+import { renderEditForm } from "./EditTask.js";
+
 const TaskList = ({ tasks, onUpdate, onDelete }) => {
     const container = document.createElement("div");
     container.innerHTML = `
@@ -29,7 +31,10 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
                         <span>Priority:</span>	
                         <p class="${task.priority}">${task.priority}</p>
                     </div>
-                    <button class="remove" type="button" data-id="${task._id}">Delete</button>
+                    <div class="list-item__actions">
+                        <button class="remove" type="button" data-id="${task._id}">Delete</button>
+                        <button class="edit" type="button" data-id="${task._id}">Edit</button>
+                    </div> 
                 </div>
             `).join("")}
     `;
@@ -37,7 +42,8 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
     container.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.addEventListener("change", async (e) => {
             const id = e.target.getAttribute("data-id");
-            const task = tasks.find(task => task._id == id);
+            const taskIndex = tasks.findIndex(task => task._id == id);
+            const task = tasks[taskIndex];
             task.completed = e.target.checked;
             await onUpdate(task);
         });
@@ -50,6 +56,34 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
         });
     });
 
+    container.querySelectorAll(".edit").forEach(button => {
+        button.addEventListener("click", async (e) => {
+            const id = e.target.getAttribute("data-id");
+            const taskIndex = tasks.findIndex(task => task._id == id);
+            const task = tasks[taskIndex];
+
+            await renderEditForm(task, e);
+            
+            const form = container.querySelector("form");
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                
+                task.title = formData.get("title"),
+                task.description = formData.get("description"),
+                task.due = formData.get("date"),
+                task.priority = formData.get("priority"),
+                task.completed = task.completed
+                
+                await onUpdate(task);
+            });
+
+            document.querySelector("#cancel-update").addEventListener("click", async () => {
+                await onUpdate("cancel");
+            });
+        });
+    });
 
 
     return container;

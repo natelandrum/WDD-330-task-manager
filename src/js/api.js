@@ -8,6 +8,13 @@ export const getTasks = async () => {
     }
 };
 
+export const getTask = async (id) => {
+    const response = await fetch(`${API_URL}/task/${id}`);
+    if (response.status === 200) {
+        return response.json();
+    }
+}
+
 export const createTask = async (task) => {
     await fetch(`${API_URL}/task`, {
         method: "POST",
@@ -19,7 +26,6 @@ export const createTask = async (task) => {
 };
 
 export const updateTask = async (id, task) => {
-    console.log(id, JSON.stringify(task));
     await fetch(`${API_URL}/task/${id}`, {
         method: "PUT",
         headers: {

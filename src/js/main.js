@@ -70,7 +70,10 @@ const render = async (option={}) => {
     });
 };
 
+async function init() {
+    await render();
+    const tasks = await getTasks();
+    await notify(tasks);
+}
 
-render();
-const tasks = await getTasks();
-await notify(tasks);
+init();

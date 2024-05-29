@@ -20,10 +20,14 @@ body {
     overflow: hidden;
 }
 
+form {
+    margin: 1rem;
+}
+
 .form-group {
     display: grid;
     gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 }
 
 #task-form-container label {
@@ -41,7 +45,9 @@ select {
 }
 
 #task-form-container input,
-#task-form-container select {
+#task-form-container select,
+#task-list-container input,
+#task-list-container select {
     display: block;
     margin: 5px 0 20px;
 }
@@ -63,7 +69,9 @@ button:hover {
 }
 
 #task-form-container input:valid,
-#task-form-container select:valid {
+#task-form-container select:valid,
+#task-list-container input:valid,
+#task-list-container select:valid {
     border: 2px solid green;
 }
 
@@ -109,7 +117,7 @@ select:invalid {
     margin: 5px 0;
 }
 
-.list-item .remove {
+.list-item button {
     background: #b41616;
     color: white;
     border: none;
@@ -121,6 +129,14 @@ select:invalid {
 
 .list-item .remove:hover {
     background: #e33b3b;
+}
+
+.list-item .edit {
+    background: #045ab0;
+}
+
+.list-item .edit:hover {
+    background: #137fea;
 }
 
 
@@ -161,7 +177,7 @@ select:invalid {
 
 #task-form-container.animate-in,
 #task-list-container.animate-in {
-    transition: transform 1s ease-out;
+    transition: transform .5s ease-out;
     transform: translateX(0);
 }
 

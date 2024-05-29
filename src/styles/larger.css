@@ -1,0 +1,9 @@
+@media (min-width: 800px) {
+    .form-group {
+        grid-template-columns: 1fr 1fr;
+    }
+    #task-form-container.animate-in,
+    #task-list-container.animate-in {
+        transition: transform 1s ease-out;
+}
+}

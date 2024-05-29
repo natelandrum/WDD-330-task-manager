@@ -5,10 +5,11 @@ import { dateInput } from "../utils/dateInput.js";
 import { validate } from "../utils/validate.js";
 import { filterTasks } from "../utils/filter.js";
 import { searchTasks } from "../utils/search.js";
+import { notify } from "../utils/notify.js";
 
 const app = document.getElementById("app");
 
-const render = async (option=null) => {
+const render = async (option={}) => {
     app.innerHTML = `
         <h1>Task Manager</h1>
         <div id="task-form-container"></div>
@@ -19,15 +20,18 @@ const render = async (option=null) => {
     const taskListContainer = document.getElementById("task-list-container");
 
     const tasks = await getTasks();
-    if (!tasks.length || option === "task-form-container") {
+    if (!tasks.length || option.container === "task-form-container") {
         taskListContainer.style.display = "none";
         taskFormContainer.classList.add("animate-in");
-
-
     }
     else {
         taskFormContainer.style.display = "none";
-        taskListContainer.classList.add("animate-in");
+        if (option.animate !== false) {
+            taskListContainer.classList.add("animate-in");
+        }
+        else {
+            taskListContainer.style.transform = "TranslateX(0)"
+        }
     }
     taskFormContainer.appendChild(TaskForm({ onSubmit: async (task) => {
         await createTask(task);
@@ -41,22 +45,32 @@ const render = async (option=null) => {
         onUpdate: async (task) => {
             const id = task._id;
             delete task._id;
+            if (task === "cancel") {
+                render({animate: false});
+                return;
+            }
             await updateTask(id, task);
+            render({animate: false});
         },
         onDelete: async (id) => {
             await deleteTask(id);
             document.querySelector(`input[data-id="${id}"]`).parentElement.remove();
             if (!document.querySelector(".list-item")) {
-                render("task-form-container");
+                render({container: "task-form-container"});
             }
-        }
+        },
     }));
     filterTasks();
     searchTasks();
     document.getElementById("add-task").addEventListener("click", () => {
-        render("task-form-container")
+        render({container: "task-form-container"})
+    });
+    document.getElementById("cancel-task").addEventListener("click", () => {
+        render();
     });
 };
 
 
 render();
+const tasks = await getTasks();
+await notify(tasks);

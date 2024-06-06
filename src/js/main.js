@@ -6,7 +6,10 @@ import { validate } from "../utils/validate.js";
 import { filterTasks } from "../utils/filter.js";
 import { searchTasks } from "../utils/search.js";
 import { notify } from "../utils/notify.js";
+import DraftManager from "../components/DraftManger.js";
+import { checkForDrafts } from "../utils/modal.js";
 
+const draftManager = new DraftManager();
 const app = document.getElementById("app");
 
 const render = async (option={}) => {
@@ -23,6 +26,7 @@ const render = async (option={}) => {
     if (!tasks.length || option.container === "task-form-container") {
         taskListContainer.style.display = "none";
         taskFormContainer.classList.add("animate-in");
+        checkForDrafts(taskFormContainer);
     }
     else {
         taskFormContainer.style.display = "none";
@@ -66,7 +70,22 @@ const render = async (option={}) => {
         render({container: "task-form-container"})
     });
     document.getElementById("cancel-task").addEventListener("click", () => {
-        render();
+        let userResponse = confirm("Do you want to save as a draft?");
+
+        if (userResponse) {
+            let form = document.querySelector("form");
+            const task = {
+                id: Date.now(),
+                title: form.title.value,
+                description: form.description.value,
+                due: form.date.value,
+                priority: form.priority.value,
+            };
+            draftManager.addDraft(task);
+            render();
+        } else {
+            render();
+        }
     });
 };
 
